@@ -1,11 +1,21 @@
 {
-  "extends": "tsconfig/react.json",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
+    "composite": true,
     "baseUrl": ".",
     "paths": {
-      "@theme/*": ["../../apps/intake/src/themes/ottehr/*"],
-      "@defaultTheme/*": ["../../apps/intake/src/themes/ottehr/*"]
+      "@ehr/*": ["apps/ehr/src/*"],
+      "@intake/*": ["apps/intake/src/*"],
+      "@zambdas/*": ["packages/zambdas/src/*"]
     }
   },
-  "include": [".", ".eslintrc.cjs"]
+  "include": [
+    "src",
+    "apps/**/*/src",
+    "packages/**/*/src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
