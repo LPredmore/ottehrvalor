@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <p align="center">
    <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://assets-global.website-files.com/653fce065d76f84cf31488ae/6543bdda5daec299834a748e_otter%20logo%20white.svg">
@@ -208,3 +209,6 @@ This repository uses a monorepo structure.
 ## Zambdas
 
 - [Zambda Documentation](./packages/zambdas/README.md)
+=======
+# ottehrvalor
+>>>>>>> origin/main
