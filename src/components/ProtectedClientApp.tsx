@@ -2,7 +2,7 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Box, CircularProgress } from '@mui/material';
-import IntakeApp from '../../apps/intake/src/App';
+import IntakeApp from '@intake';
 
 export const ProtectedClientApp: React.FC = () => {
   const { isAuthenticated, isLoading, loginWithRedirect } = useAuth0();

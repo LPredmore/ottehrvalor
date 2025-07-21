@@ -7,11 +7,10 @@ import svgr from 'vite-plugin-svgr';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
 
 export default ({ mode }: { mode: string }) => {
-  const envDir = './env';
-  const env = loadEnv(mode, path.join(process.cwd(), envDir), '');
+  // Load .env files from project root instead of ./env
+  const env = loadEnv(mode, process.cwd(), '');
 
   return defineConfig({
-    envDir: envDir,
     publicDir: 'public',
     plugins: [react(), viteTsconfigPaths(), svgr()],
     server: {
@@ -23,5 +22,14 @@ export default ({ mode }: { mode: string }) => {
       target: browserslistToEsbuild(),
       assetsInlineLimit: 0,
     },
+    resolve: {
+      alias: {
+        '@ehr': path.resolve(__dirname, 'apps/ehr/src'),
+        '@intake': path.resolve(__dirname, 'apps/intake/src'),
+      }
+    },
+    define: {
+      'process.env': env
+    }
   });
 };
