@@ -1,3 +1,4 @@
+
 import react from '@vitejs/plugin-react';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import * as path from 'path';
@@ -15,7 +16,7 @@ export default ({ mode }: { mode: string }) => {
     plugins: [react(), viteTsconfigPaths(), svgr()],
     server: {
       open: true,
-      port: env.PORT ? parseInt(env.PORT) : undefined,
+      port: 8080, // Hardcoded for Lovable compatibility
     },
     build: {
       outDir: './build',
