@@ -1,3 +1,4 @@
+
 import './index.css';
 import './lib/i18n';
 import { Auth0Provider } from '@auth0/auth0-react';
@@ -6,41 +7,43 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 
-window.global ||= window; // https://stackoverflow.com/questions/72795666/how-to-fix-vite-build-parser-error-unexpected-token-in-third-party-dependenc
+window.global ||= window;
 
 // polyfill for fixing missing hasOwn Object property in some browsers
-// https://www.npmjs.com/package/object.hasown
 if (!Object.hasOwn) {
   hasOwn.shim();
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-const { VITE_APP_AUTH0_AUDIENCE, VITE_APP_AUTH_URL, VITE_APP_CLIENT_ID } = import.meta.env;
-if (!VITE_APP_CLIENT_ID || !VITE_APP_AUTH0_AUDIENCE) {
+
+// Use consolidated environment variables with fallbacks to legacy ones
+const AUTH0_DOMAIN = import.meta.env.VITE_AUTH0_DOMAIN || import.meta.env.VITE_APP_AUTH_URL || '';
+const AUTH0_CLIENT_ID = import.meta.env.VITE_AUTH0_CLIENT_ID || import.meta.env.VITE_APP_CLIENT_ID || '';
+const AUTH0_REDIRECT_URI = import.meta.env.VITE_AUTH0_REDIRECT_URI || `${window.location.origin}/redirect`;
+const AUTH0_AUDIENCE = import.meta.env.VITE_APP_OYSTEHR_APPLICATION_AUDIENCE || import.meta.env.VITE_APP_AUTH0_AUDIENCE || '';
+
+if (!AUTH0_CLIENT_ID || !AUTH0_AUDIENCE) {
   throw new Error('Client ID or audience not found');
 }
+
 root.render(
   <React.StrictMode>
     <Auth0Provider
-      domain={VITE_APP_AUTH_URL}
-      clientId={VITE_APP_CLIENT_ID}
+      domain={AUTH0_DOMAIN}
+      clientId={AUTH0_CLIENT_ID}
       authorizationParams={{
         connection: 'sms',
-        redirectUri: `${window.location.origin}/redirect`,
-        audience: VITE_APP_AUTH0_AUDIENCE,
+        redirectUri: AUTH0_REDIRECT_URI,
+        audience: AUTH0_AUDIENCE,
         scope: 'openid profile email offline_access',
       }}
       useRefreshTokens={true}
       useRefreshTokensFallback={true}
-      // adding cache location so that auth persists on page refresh
-      // https://stackoverflow.com/questions/63537913/auth0-does-not-persist-login-on-page-refresh-for-email-password
       cacheLocation="localstorage"
       onRedirectCallback={(appState) => {
-        // If the appState is not defined, we can just return
         if (!appState || !appState.target) {
           return;
         }
-        // Otherwise, we can stick appState.target in local storage so that it can be used in the auth landing page
         localStorage.setItem('redirectDestination', appState.target);
       }}
     >
