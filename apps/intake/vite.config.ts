@@ -1,8 +1,10 @@
+
 import { sentryVitePlugin } from '@sentry/vite-plugin';
 import { existsSync } from 'fs';
 import path from 'path';
 import { defineConfig, loadEnv, mergeConfig, PluginOption } from 'vite';
 import IstanbulPlugin from 'vite-plugin-istanbul';
+import { componentTagger } from 'lovable-tagger';
 import config from '../../vite.config';
 
 export default (env: any): Record<string, any> => {
@@ -20,7 +22,8 @@ export default (env: any): Record<string, any> => {
       include: 'src/*',
       extension: ['.js', '.ts', '.tsx'],
     }),
-  ];
+    mode === 'development' && componentTagger(),
+  ].filter(Boolean);
 
   if (shouldUploadSentrySourceMaps) {
     plugins.push(
@@ -65,6 +68,7 @@ export default (env: any): Record<string, any> => {
       },
       resolve: {
         alias: {
+          '@': path.resolve(__dirname, './src'),
           '@theme': path.resolve(__dirname, appEnv.THEME_PATH || '/src/themes/ottehr'),
           '@defaultTheme': path.resolve(__dirname, '/src/themes/ottehr'),
         },

@@ -5,6 +5,7 @@ import * as path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 import svgr from 'vite-plugin-svgr';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
+import { componentTagger } from 'lovable-tagger';
 
 export default ({ mode }: { mode: string }) => {
   // Load .env files from project root instead of ./env
@@ -12,8 +13,14 @@ export default ({ mode }: { mode: string }) => {
 
   return defineConfig({
     publicDir: 'public',
-    plugins: [react(), viteTsconfigPaths(), svgr()],
+    plugins: [
+      react(), 
+      viteTsconfigPaths(), 
+      svgr(),
+      mode === 'development' && componentTagger(),
+    ].filter(Boolean),
     server: {
+      host: "::",
       open: true,
       port: 8080, // Hardcoded for Lovable compatibility
     },
@@ -24,6 +31,7 @@ export default ({ mode }: { mode: string }) => {
     },
     resolve: {
       alias: {
+        '@': path.resolve(__dirname, './src'),
         '@ehr': path.resolve(__dirname, 'apps/ehr/src'),
         '@intake': path.resolve(__dirname, 'apps/intake/src'),
       }
