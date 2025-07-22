@@ -23,8 +23,7 @@
     "allowJs": false,
     "noUnusedParameters": false,
     "noUnusedLocals": false,
-    "resolveJsonModule": true,
-    "noEmit": true
+    "resolveJsonModule": true
   },
   "exclude": ["node_modules"],
   "include": [".eslintrc.cjs", "scripts/**/*.ts", "scripts/**/*.js"]
