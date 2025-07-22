@@ -8,14 +8,9 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import App from './App';
+import config from './config/env';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-
-// Use the consolidated environment variables
-const AUTH0_DOMAIN = import.meta.env.VITE_AUTH0_DOMAIN || 'https://auth.zapehr.com';
-const AUTH0_CLIENT_ID = import.meta.env.VITE_AUTH0_CLIENT_ID || '';
-const AUTH0_REDIRECT_URI = import.meta.env.VITE_AUTH0_REDIRECT_URI || window.location.origin + '/callback';
-const AUTH0_AUDIENCE = import.meta.env.VITE_APP_OYSTEHR_APPLICATION_AUDIENCE || 'https://api.zapehr.com';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,8 +28,8 @@ const theme = createTheme({
   },
 });
 
-if (!AUTH0_CLIENT_ID) {
-  console.error('Missing AUTH0_CLIENT_ID environment variable');
+if (!config.AUTH0_CLIENT_ID) {
+  console.error('Missing AUTH0_CLIENT_ID configuration');
 }
 
 root.render(
@@ -43,11 +38,11 @@ root.render(
       <CssBaseline />
       <QueryClientProvider client={queryClient}>
         <Auth0Provider
-          domain={AUTH0_DOMAIN}
-          clientId={AUTH0_CLIENT_ID}
+          domain={config.AUTH0_DOMAIN}
+          clientId={config.AUTH0_CLIENT_ID}
           authorizationParams={{
-            audience: AUTH0_AUDIENCE,
-            redirect_uri: AUTH0_REDIRECT_URI,
+            audience: config.AUTH0_AUDIENCE,
+            redirect_uri: config.AUTH0_REDIRECT_URI,
           }}
           cacheLocation="localstorage"
         >

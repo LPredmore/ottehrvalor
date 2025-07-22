@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Box, Card, CardContent, Tab, Tabs, Button, Typography } from '@mui/material';
+import config from '../config/env';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -37,7 +38,7 @@ export const LoginPage: React.FC = () => {
     // Redirect to Auth0 login
     await loginWithRedirect({
       authorizationParams: {
-        redirect_uri: import.meta.env.VITE_AUTH0_REDIRECT_URI,
+        redirect_uri: config.AUTH0_REDIRECT_URI,
       },
     });
   };
