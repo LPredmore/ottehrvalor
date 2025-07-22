@@ -23,7 +23,7 @@
     "config-schedules": "tsx src/scripts/ensure-schedule-config.ts",
     "update-user-roles": "tsx src/scripts/update-user-roles.ts",
     "clean-up-e2e": "tsx src/scripts/clean-up-e2e.ts",
-    "build": "tsc",
+    "build": "tsc --project .",
     "bundle": "tsx bundle.ts",
     "lint": "NODE_OPTIONS='--max-old-space-size=8192' eslint --ext .ts,.js --report-unused-disable-directives --max-warnings 0 .",
     "lint:fix": "eslint --ext .ts,.js --report-unused-disable-directives --max-warnings 0 --fix .",
