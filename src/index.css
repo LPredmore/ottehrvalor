@@ -1,7 +1,5 @@
 
-@import url('../apps/ehr/src/index.css');
-
-/* Root-level styles for Lovable compatibility */
+/* Root-level styles for unified entry point */
 * {
   box-sizing: border-box;
   margin: 0;

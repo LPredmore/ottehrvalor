@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "baseUrl": ".",
+    "paths": {
+      "@ehr/*": ["apps/ehr/src/*"],
+      "@intake/*": ["apps/intake/src/*"],
+      "@zambdas/*": ["packages/zambdas/src/*"]
+    }
+  },
+  "include": [
+    "src",
+    "apps/**/*/src",
+    "packages/**/*/src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
